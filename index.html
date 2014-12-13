@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="todo">
+<head>
+  <meta charset="UTF-8">
+  <title>Todos</title>
+  <link rel="stylesheet" href="css/zui.lite.min.css">
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+  <div class="container" ng-controller="TodoController">
+    <div class="form-group" id="search">
+      <input type="search" class="form-control" ng-model="search" ng-keyup="onSearch($event)" placeholder="搜索或添加待办">
+    </div>
+    <div id="createTodo" ng-show="search" ng-click="createTodo()">
+      创建新的待办： <strong class="text-primary">{{search}}</strong>
+    </div>
+    <div id="info"><span ng-show="!search"><strong>{{waitCount()}}</strong> 未完成，共 <strong>{{todos.length}}</strong> 个</span><span ng-show="search"><strong>{{(todos| filter: search).length}}</strong> 个</span>搜索结果</div>
+    <div>
+      <table id="todos" class="table table-hover">
+        <tr ng-repeat="todo in todos | filter: search | orderBy: sort" ng-class="{finished: todo.finish}">
+          <td class="col-status"><i class="todo-check icon-ok" ng-click="toggleFinish(todo)"></i></td>
+          <td class="col-name">
+            <input type="text" ng-model="todo.name" class="todo-name">
+          <td class="col-actions"><a href="###" ng-click="remove($index)"><i class="icon-trash"></i></a></td>
+        </tr>
+      </table>
+    </div>
+  </div>
+
+  <script src="js/angular.js"></script>
+  <script src="js/app.js"></script>
+</body>
+</html>
